@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .navbar-brand {
@@ -26,4 +26,15 @@ h1, h2, h3, h4, h5, h6 {
     margin: 10px;
     width: calc(33% - 40px);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
