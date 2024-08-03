@@ -22,13 +22,26 @@
         .content {
             position: relative;
             z-index: 1; /* Ensure the content stays in the foreground */
+            background: rgba(0, 0, 0, 0.5); /* Add semi-transparent background to content */
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+        .navbar, .footer {
+            background: rgba(0, 0, 0, 0.8); /* Semi-transparent navbar and footer */
+        }
+        .navbar-brand, .nav-link, .footer p {
+            color: white !important; /* Ensure text is white */
+        }
+        .navbar-nav .nav-item.active .nav-link {
+            color: #ffcc00 !important; /* Highlight active link */
         }
     </style>
 </head>
 <body>
     <div id="particles-js"></div> <!-- Particle Animation Div -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <a class="navbar-brand" href="#">Mihir Parmar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -48,15 +61,13 @@
         </div>
     </nav>
     <div class="container text-center my-5 content">
-        <div class="jumbotron bg-light shadow">
-            <h1 class="display-4">Hello, I'm Mihir Parmar!</h1>
-            <p class="lead">I'm a passionate developer with a focus on creating innovative solutions.</p>
-            <hr class="my-4">
-            <p>Explore my projects and feel free to reach out!</p>
-            <a class="btn btn-primary btn-lg" href="projects.html" role="button">View Projects</a>
-        </div>
+        <h1 class="display-4">Hello, I'm Mihir Parmar!</h1>
+        <p class="lead">I'm a passionate developer with a focus on creating innovative solutions.</p>
+        <hr class="my-4">
+        <p>Explore my projects and feel free to reach out!</p>
+        <a class="btn btn-primary btn-lg" href="projects.html" role="button">View Projects</a>
     </div>
-    <footer class="bg-dark text-white text-center py-3 content">
+    <footer class="footer text-center py-3">
         <p>&copy; 2024 Mihir Parmar. All Rights Reserved.</p>
     </footer>
 
