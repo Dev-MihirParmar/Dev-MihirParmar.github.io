@@ -240,7 +240,7 @@ export default function Component() {
               alt='Mihir Parmar'
               className='relative z-10 object-cover rounded-lg border-4 border-gray-800'
               style={{
-                width: '220px',
+                width: '300px',
                 height: '300px',
               }}
               whileHover={{ scale: 1.05 }}
