@@ -42,10 +42,10 @@ interface NavItemProps {
 
 const NavItem: React.FC<NavItemProps> = ({ children, isActive, onClick }) => (
   <motion.div
-    className={`px-4 py-2 rounded-full ${
-      isActive ? 'bg-blue-500 text-white' : 'bg-white bg-opacity-10 text-gray-300'
+    className={`px-3 py-1 rounded-full ${
+      isActive ? 'bg-blue-500 text-white' : 'text-gray-300'
     }`}
-    whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+    whileHover={{ scale: 1.1, backgroundColor: isActive ? '' : 'rgba(255, 255, 255, 0.2)' }} 
     whileTap={{ scale: 0.95 }}
     onClick={onClick}
   >
@@ -121,31 +121,34 @@ export default function Component() {
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
 
         {/* Content */}
-        <motion.div className="relative h-full pt-28">
-          {/* Navigation Bar */}
+        <motion.div className="relative h-full pt-20"> 
+          {/* Navigation Bar (Modified) */}
           <nav className="fixed top-0 left-0 right-0">
             <motion.div
-              className="flex justify-center space-x-8 py-4 px-6 mx-auto mt-4 max-w-5xl"
+              className="py-2 mx-auto mt-4 max-w-2xl rounded-full backdrop-blur-sm bg-white bg-opacity-10" 
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 100, delay: 0.2 }}
+              style={{ boxShadow: '0 0 15px rgba(0, 255, 255, 0.3)' }} 
             >
-              {[
-                'Home',
-                'Portfolio',
-                'Projects',
-                'Gallery',
-                'Articles',
-                'Blog',
-              ].map((item) => (
-                <NavItem
-                  key={item}
-                  isActive={activePage === item}
-                  onClick={() => handleNavigation(item)}
-                >
-                  {item}
-                </NavItem>
-              ))}
+              <div className="flex justify-center space-x-4"> 
+                {[
+                  'Home',
+                  'Portfolio',
+                  'Projects',
+                  'Gallery',
+                  'Articles',
+                  'Blog',
+                ].map((item) => (
+                  <NavItem
+                    key={item}
+                    isActive={activePage === item}
+                    onClick={() => handleNavigation(item)}
+                  >
+                    {item}
+                  </NavItem>
+                ))}
+              </div>
             </motion.div>
           </nav>
 
@@ -303,7 +306,7 @@ export default function Component() {
 
         .glow {
           text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
-            0 0 20px rgba(0, 255, 255, 0.5);
+            0 0 20px rgba(0, 255, 255, 0.5); 
         }
 
         @keyframes twinkle {
