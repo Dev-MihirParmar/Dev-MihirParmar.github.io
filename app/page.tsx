@@ -84,9 +84,9 @@ const SpaceBackground = () => {
       <Stars
         radius={100}
         depth={50}
-        count={50000}
-        factor={4}
-        saturation={2}
+        count={20000}
+        factor={5}
+        saturation={0}
         fade
       />
       <mesh>
@@ -122,7 +122,7 @@ export default function Component() {
         <motion.div className="relative h-full pt-16 sm:pt-28">
           <nav className="fixed top-0 left-0 right-0 z-50">
             <motion.div
-              className="flex justify-center space-x-1 sm:space-x-4 py-1 sm:py-2 px-1 sm:px-2 mx-auto mt-2 sm:mt-4 max-w-fit bg-white bg-opacity-10 rounded-full"
+               className="flex justify-center space-x-1 sm:space-x-2 py-0 sm:py-1 px-1 sm:px-2 mx-auto mt-1 sm:mt-2 max-w-fit bg-white bg-opacity-10 rounded-full"
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 100, delay: 0.2 }}
