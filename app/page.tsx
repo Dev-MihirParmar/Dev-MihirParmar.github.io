@@ -84,9 +84,9 @@ const SpaceBackground = () => {
       <Stars
         radius={100}
         depth={50}
-        count={5000}
+        count={50000}
         factor={4}
-        saturation={0}
+        saturation={2}
         fade
       />
       <mesh>
