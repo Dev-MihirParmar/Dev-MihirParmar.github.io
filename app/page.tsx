@@ -31,7 +31,7 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({ text }) => {
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, text]);
 
-  return <span className="text-sm md:text-base text-white">{displayText}</span>;
+  return <span className="text-lg md:text-2xl text-white">{displayText}</span>; // "Hey there," is bigger on desktop 
 };
 
 interface NavItemProps {
@@ -81,11 +81,11 @@ const SpaceBackground = () => {
   return (
     <>
       <Stars
-        radius={80} // Restored original radius
-        depth={50}  // Restored original depth
-        count={50000} // Restored original count
-        factor={4}   // Restored original factor
-        saturation={2} // Restored original saturation
+        radius={80}
+        depth={50}
+        count={50000}
+        factor={4}
+        saturation={2}
         fade
       />
       <mesh>
@@ -167,7 +167,7 @@ export default function Component() {
               transition={{ delay: 0.6 }}
             >
               <motion.h1
-                className="text-xl font-bold mb-2 text-blue-300 md:text-5xl md:mb-4"
+                className="text-xl font-bold mb-2 text-blue-300 md:text-6xl md:mb-4" 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
@@ -230,7 +230,7 @@ export default function Component() {
 
             {/* Image (moved below text on smaller screens) */}
             <motion.div
-              className="relative rounded-lg p-1 bg-blue-900 mt-5 w-48 md:w-64 md:mt-30 md:ml-auto order-1 md:order-2"
+              className="relative rounded-lg p-1 bg-blue-900 mt-5 w-36 md:w-64 md:mt-30 md:ml-auto order-1 md:order-2"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -263,7 +263,72 @@ export default function Component() {
         </motion.div>
       </div>
 
-      {/* ... (Styles remain the same) ... */}
+      <style jsx global>{`
+        body {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Inter', sans-serif;
+          background: radial-gradient(
+            ellipse at bottom,
+            #1b2735 0%,
+            #090a0f 100%
+          );
+          color: white; /* Ensure text is visible against the dark background */
+        }
+
+        .glow {
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.8),
+            0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        @keyframes twinkle {
+          0%,
+          100% {
+            opacity: 0.2;
+          }
+          50% {
+            opacity: 1;
+          }
+        }
+
+        .section {
+          transition: opacity 0.5s ease-in-out, transform 0.7s ease-in-out;
+          box-shadow: none;
+          border-radius: 0;
+        }
+
+        /* Absolutely position the content container */
+        .absolute.inset-0.z-10 {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 10; /* Ensure it's above the canvas */
+        }
+
+        @media (max-width: 768px) {
+          .section {
+            padding: 1rem; /* Reduced padding for smaller screens */
+          }
+
+          /* Make top bar smaller and reduce space between items on smaller screens */
+          nav .motion.div {
+            py: 0.5rem; /* Reduced padding */
+            mt: 1rem; /* Reduced margin */
+          }
+
+          nav .motion.div .flex {
+            space-x: 0.5rem; /* Reduced spacing between navigation items */
+          }
+
+          nav .motion.div .flex .motion.div {
+            px: 1rem; /* Reduced padding within navigation items */
+            py: 0.25rem; /* Reduced padding within navigation items */
+          }
+        }
+      `}</style>
     </div>
   );
 }
