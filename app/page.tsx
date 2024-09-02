@@ -113,6 +113,7 @@ export default function Component() {
           <SpaceBackground />
         </Suspense>
         <OrbitControls enableZoom={true} autoRotate autoRotateSpeed={0.7} />
+        <ambientLight intensity={0.5} /> 
       </Canvas>
 
       {/* Content Container (absolutely positioned) */}
@@ -125,11 +126,11 @@ export default function Component() {
           {/* Navigation Bar (Modified) */}
           <nav className="fixed top-0 left-0 right-0">
             <motion.div
-              className="py-2 mx-auto mt-4 max-w-2xl rounded-full backdrop-blur-sm bg-white bg-opacity-10" 
+              className="py-2 mx-auto mt-4 max-w-2xl rounded-full backdrop-blur-sm bg-opacity-10" 
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 100, delay: 0.2 }}
-              style={{ boxShadow: '0 0 15px rgba(0, 255, 255, 0.3)' }} 
+              style={{ boxShadow: '0 0 15px rgba(0, 0, 0, 0.3)' }} 
             >
               <div className="flex justify-center space-x-4"> 
                 {[
@@ -226,7 +227,7 @@ export default function Component() {
               </motion.div>
             </motion.div>
             <motion.div
-              className="relative shadow-2xl rounded-lg p-1 bg-blue-900 ml-auto"
+              className="relative rounded-lg p-1 bg-blue-900 ml-auto" 
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
@@ -321,6 +322,8 @@ export default function Component() {
 
         .section {
           transition: opacity 0.5s ease-in-out, transform 0.7s ease-in-out;
+          box-shadow: none; 
+          border-radius: 0; 
         }
 
         /* Absolutely position the content container */
