@@ -1,6 +1,7 @@
 'use client';
+
 import React, { useState, useEffect, Suspense } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Download } from 'lucide-react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
@@ -31,7 +32,7 @@ const TypewriterText: React.FC<TypewriterTextProps> = ({ text }) => {
     return () => clearTimeout(timer);
   }, [displayText, isDeleting, text]);
 
-  return <span className="text-lg md:text-2xl text-white">{displayText}</span>; // "Hey there," is bigger on desktop 
+  return <span>{displayText}</span>;
 };
 
 interface NavItemProps {
@@ -42,16 +43,16 @@ interface NavItemProps {
 
 const NavItem: React.FC<NavItemProps> = ({ children, isActive, onClick }) => (
   <motion.div
-    className={`px-1 py-0.5 rounded-full text-xs md:px-3 md:py-1 md:text-lg ${
+    className={`px-1 sm:px-4 py-1 sm:py-2 rounded-full ${
       isActive ? 'bg-blue-500 text-white' : 'text-gray-300'
     }`}
-    whileHover={{ scale: 1.1, backgroundColor: isActive ? '' : 'rgba(255, 255, 255, 0.2)' }}
+    whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
     whileTap={{ scale: 0.95 }}
     onClick={onClick}
   >
     <a
       href="#"
-      className={`transition-colors ${
+      className={`transition-colors text-xs sm:text-base ${
         isActive ? 'glow' : 'hover:text-blue-300'
       }`}
     >
@@ -70,10 +71,10 @@ const SocialButton: React.FC<{ icon: string; href: string }> = ({
     rel="noopener noreferrer"
     whileHover={{ scale: 1.15 }}
     whileTap={{ scale: 0.95 }}
-    className="p-2 rounded-full bg-white bg-opacity-10 backdrop-blur-sm text-white transition-all duration-300 md:p-3"
-    style={{ boxShadow: '0 0 10px rgba(0, 255, 255, 0.5)' }}
+    className="p-2 sm:p-3 rounded-full bg-white bg-opacity-10 backdrop-blur-sm text-white transition-all duration-300"
+    style={{ boxShadow: '0 0 15px rgba(0, 255, 255, 0.5)' }}
   >
-    <img src={icon} alt="Social Icon" className="h-5 w-5 md:h-8 md:w-8" />
+    <img src={icon} alt="Social Icon" className="h-6 w-6 sm:h-8 sm:w-8" />
   </motion.a>
 );
 
@@ -81,15 +82,15 @@ const SpaceBackground = () => {
   return (
     <>
       <Stars
-        radius={80}
+        radius={100}
         depth={50}
-        count={50000}
+        count={5000}
         factor={4}
-        saturation={2}
+        saturation={0}
         fade
       />
       <mesh>
-        <sphereGeometry args={[1000, 60, 40]} />
+        <sphereGeometry args={[500, 60, 40]} />
         <meshBasicMaterial
           map={new THREE.TextureLoader().load('/baground.jpg')}
           side={THREE.BackSide}
@@ -112,63 +113,47 @@ export default function Component() {
         <Suspense fallback={null}>
           <SpaceBackground />
         </Suspense>
-        <OrbitControls enableZoom={true} autoRotate autoRotateSpeed={0.7} />
-        <ambientLight intensity={0.5} />
+        <OrbitControls enableZoom={true} autoRotate autoRotateSpeed={0.5} />
       </Canvas>
 
-      {/* Content Container (absolutely positioned) */}
       <div className="absolute inset-0 z-10">
-        {/* Translucent Overlay */}
         <div className="absolute inset-0 bg-black bg-opacity-30"></div>
 
-        {/* Content */}
-        <motion.div className="relative h-full pt-10 md:pt-20">
-          {/* Navigation Bar (Optimized) */}
+        <motion.div className="relative h-full pt-16 sm:pt-28">
           <nav className="fixed top-0 left-0 right-0 z-50">
             <motion.div
-              className="py-1 mx-auto mt-2 px-2 text-xs md:py-2 md:mt-4 md:px-4 md:max-w-2xl md:rounded-full backdrop-blur-sm bg-opacity-10"
-              initial={{ y: -50, opacity: 0 }}
+              className="flex justify-center space-x-1 sm:space-x-4 py-1 sm:py-2 px-1 sm:px-2 mx-auto mt-2 sm:mt-4 max-w-fit bg-white bg-opacity-10 rounded-full"
+              initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 100, delay: 0.2 }}
-              style={{ boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)' }}
             >
-              <div className="flex flex-wrap justify-center space-x-1 overflow-x-auto md:space-x-4 md:nowrap">
-                {[
-                  'Home',
-                  'Portfolio',
-                  'Projects',
-                  'Gallery',
-                  'Articles',
-                  'Blog',
-                ].map((item) => (
-                  <NavItem
-                    key={item}
-                    isActive={activePage === item}
-                    onClick={() => handleNavigation(item)}
-                  >
-                    {item}
-                  </NavItem>
-                ))}
-              </div>
+              {['Home', 'Portfolio', 'Projects', 'Gallery', 'Articles', 'Blog'].map((item) => (
+                <NavItem
+                  key={item}
+                  isActive={activePage === item}
+                  onClick={() => handleNavigation(item)}
+                >
+                  {item}
+                </NavItem>
+              ))}
             </motion.div>
           </nav>
 
-          {/* Hero Section */}
           <motion.div
-            className="flex flex-col md:flex-row items-center justify-center h-full px-2 mt-12 md:px-16 md:mt-19"
+            className="flex flex-col sm:flex-row items-start sm:items-center justify-between h-full px-4 sm:px-16 mt-4 sm:mt-19"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
             <motion.div
-              className="max-w-xs text-center md:max-w-lg md:text-left order-2 md:order-1"
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
+              className="max-w-lg text-left"
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.6 }}
             >
               <motion.h1
-                className="text-xl font-bold mb-2 text-blue-300 md:text-6xl md:mb-4" 
-                initial={{ opacity: 0, y: 10 }}
+                className="text-3xl sm:text-5xl font-bold mb-2 sm:mb-4 text-blue-300"
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
               >
@@ -177,8 +162,8 @@ export default function Component() {
                 I am Mihir Parmar
               </motion.h1>
               <motion.p
-                className="text-xs mb-3 text-gray-300 md:text-xl md:mb-6"
-                initial={{ opacity: 0, y: 10 }}
+                className="text-sm sm:text-xl mb-3 sm:mb-6 text-gray-300"
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1 }}
               >
@@ -186,22 +171,21 @@ export default function Component() {
                 Enthusiast, JEE Aspirant or whatever you like to call it
               </motion.p>
               <motion.div
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.2 }}
-                className="mb-5 md:mb-10"
+                className="mb-4 sm:mb-10"
               >
                 <Button
                   variant="outline"
-                  className="text-blue-500 border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 transform hover:scale-105 text-xs py-1 px-2 md:text-lg md:py-3 md:px-6 glow"
+                  className="text-blue-500 border-blue-500 hover:bg-blue-500 hover:text-white transition-all duration-300 transform hover:scale-110 text-sm sm:text-lg py-2 sm:py-3 px-4 sm:px-6 glow"
                 >
-                  <Download className="mr-1 h-3 w-3 md:mr-2 md:h-4 md:w-4" />
-                  Download my CV
+                  <Download className="mr-2 h-3 w-3 sm:h-4 sm:w-4" /> Download my CV
                 </Button>
               </motion.div>
               <motion.div
-                className="flex justify-center space-x-2 mt-5 md:space-x-8 md:mt-10"
-                initial={{ opacity: 0, y: 10 }}
+                className="flex space-x-4 sm:space-x-8 mt-4 sm:mt-10"
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.4 }}
               >
@@ -227,39 +211,69 @@ export default function Component() {
                 />
               </motion.div>
             </motion.div>
-
-            {/* Image (moved below text on smaller screens) */}
             <motion.div
-              className="relative rounded-lg p-1 bg-blue-900 mt-5 w-36 md:w-64 md:mt-30 md:ml-auto order-1 md:order-2"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
+              className="relative shadow-2xl rounded-lg p-2 bg-gray-900 mt-4 sm:mt-0 sm:ml-auto"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
+              style={{ marginRight: '15%', marginTop: '30px' }}
             >
               <motion.img
                 src="/your-photo.jpg"
                 alt="Mihir Parmar"
-                className="relative z-10 object-cover rounded-lg border-1 border-blue-800"
+                className="relative z-10 object-cover rounded-lg border-2 border-purple-800"
                 style={{
-                  width: '100%',
-                  height: 'auto',
+                  width: '250px',
+                  height: '300px',
                 }}
                 whileHover={{ scale: 1.05 }}
               />
               <motion.div
-                className="absolute -inset-1 rounded-lg bg-gradient-to-br from-gray-700 to-gray-900 blur-lg opacity-70"
+                className="absolute -inset-1.5 rounded-lg bg-gradient-to-br from-gray-700 to-gray-900 blur-lg opacity-70"
               />
             </motion.div>
           </motion.div>
 
-          {/* Sections (optimized) */}
-          <div className="mt-12 md:mt-20">
-            {activePage === 'Portfolio' && (
-              <section className="flex justify-center items-center h-screen">
-                <h2 className="text-2xl text-white md:text-4xl">Portfolio Page</h2>
-              </section>
-            )}
-            {/* Other Sections (similar structure) */}
-          </div>
+          <AnimatePresence>
+            <motion.div
+              key={activePage}
+              className={`section transition-all duration-700 ease-in-out transform ${
+                activePage === 'Home'
+                  ? 'opacity-100 scale-100'
+                  : 'opacity-0 scale-90'
+              }`}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.5 }}
+            >
+              {activePage === 'Portfolio' && (
+                <div className="flex justify-center items-center h-screen">
+                  <h2 className="text-4xl text-white">Portfolio Page</h2>
+                </div>
+              )}
+              {activePage === 'Projects' && (
+                <div className="flex justify-center items-center h-screen">
+                  <h2 className="text-4xl text-white">Projects Page</h2>
+                </div>
+              )}
+              {activePage === 'Gallery' && (
+                <div className="flex justify-center items-center h-screen">
+                  <h2 className="text-4xl text-white">Gallery Page</h2>
+                </div>
+              )}
+              {activePage === 'Articles' && (
+                <div className="flex justify-center items-center h-screen">
+                  <h2 className="text-4xl text-white">Articles Page</h2>
+                </div>
+              )}
+              {activePage === 'Blog' && (
+                <div className="flex justify-center items-center h-screen">
+                  <h2 className="text-4xl text-white">Blog Page</h2>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
         </motion.div>
       </div>
 
@@ -274,7 +288,7 @@ export default function Component() {
             #1b2735 0%,
             #090a0f 100%
           );
-          color: white; /* Ensure text is visible against the dark background */
+          color: white;
         }
 
         .glow {
@@ -294,38 +308,35 @@ export default function Component() {
 
         .section {
           transition: opacity 0.5s ease-in-out, transform 0.7s ease-in-out;
-          box-shadow: none;
-          border-radius: 0;
         }
 
-        /* Absolutely position the content container */
         .absolute.inset-0.z-10 {
           position: absolute;
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
-          z-index: 10; /* Ensure it's above the canvas */
+          z-index: 10;
         }
 
-        @media (max-width: 768px) {
-          .section {
-            padding: 1rem; /* Reduced padding for smaller screens */
+        @media (max-width: 640px) {
+          .max-w-lg {
+            max-width: 100%;
           }
-
-          /* Make top bar smaller and reduce space between items on smaller screens */
-          nav .motion.div {
-            py: 0.5rem; /* Reduced padding */
-            mt: 1rem; /* Reduced margin */
+          .flex-col.sm\\:flex-row {
+            flex-direction: column;
           }
-
-          nav .motion.div .flex {
-            space-x: 0.5rem; /* Reduced spacing between navigation items */
+          .items-start.sm\\:items-center {
+            align-items: flex-start;
           }
-
-          nav .motion.div .flex .motion.div {
-            px: 1rem; /* Reduced padding within navigation items */
-            py: 0.25rem; /* Reduced padding within navigation items */
+          .relative.shadow-2xl {
+            margin-top: 1rem !important;
+            margin-right: 0 !important;
+            align-self: center;
+          }
+          .relative.shadow-2xl img {
+            width: 200px;
+            height: 240px;
           }
         }
       `}</style>
