@@ -92,7 +92,7 @@ const SpaceBackground = () => {
       <mesh>
         <sphereGeometry args={[500, 60, 40]} />
         <meshBasicMaterial
-          map={new THREE.TextureLoader().load('/baground.jpg')}
+          map={new THREE.TextureLoader().load('/baground.webp')}
           side={THREE.BackSide}
         />
       </mesh>
